@@ -1,45 +1,18 @@
-﻿; #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+; #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ; #NoTrayIcon
 #SingleInstance Forcestr
-strComputer := "."
-objWMIService := ComObjGet("winmgmts:{impersonationLevel=impersonate}!\\" . strComputer . "\root\cimv2")
-colSettings := objWMIService.ExecQuery("Select * from Win32_OperatingSystem")._NewEnum
-While colSettings[objOSItem]
-{
-Key := objOSItem.SerialNumber
-}
-URLDownloadToFile, https://drive.google.com/uc?export=download&confirm=no_antivirus&id=1lAAj-1MVMMGG2CeQJeqnu8PQ1WmWMjsJ, %a_temp%/keys.dat
-fileread, read, %a_temp%/keys.dat
-if read contains %Key%
-goto true
-Gui, -Caption 
-Gui, Show, xCenter ycenter h463 w1200, Доступ.
-Gui, add, picture, x0 y0 h463 w1200, %A_WorkingDir%/dev/HWID.png
-Gui, Add, Text, x122 y29 w270 h30 , Ключ:
-Gui, Add, Edit, x195 y190 w810.53 h30 ReadOnly vEdit,
-Gui, Add, button, x397 y247 w400 h50 gClip, Скопировать ключ
-GuiControl, , Edit, % Key
-return
-Clip:
-Gui, Submit, NoHide
-Clipboard := Edit
-ExitApp
-GuiClose:
-ExitApp
-true:
-
-buildscr = 20
-downlurl := "https://jeazz.ucoz.net/ahk/pr/RiveraGos.ahk"
-downllen := "https://jeazz.ucoz.net/ahk/pr/verlen.ini"
-SplashTextOn, , 60,Проверка обновления, ожидайте.`nНайдено обновление.
+buildscr = 2
+downlurl := "https://github.com/dazzziee/binder/raw/main/dazzziee%20binder.ahk"
+downllen := "https://raw.githubusercontent.com/dazzziee/binder/main/verlen.ini"
+SplashTextOn, , 60,Проверка обновления, ожидайте.`nНПроверяем.
 URLDownloadToFile, %downllen%, %a_temp%/verlen.ini
 
 IniRead, buildupd, %a_temp%/verlen.ini, UPD, build
 sleep, 1200
 
-if buildupd = 20
+if buildupd = 1
 {
     SplashTextOn, , 60,�������������, ���������� �� �������.
     sleep, 1000
@@ -76,4 +49,34 @@ if buildupd > % buildscr
 			}
     }
 }
+
+
+strComputer := "."
+objWMIService := ComObjGet("winmgmts:{impersonationLevel=impersonate}!\\" . strComputer . "\root\cimv2")
+colSettings := objWMIService.ExecQuery("Select * from Win32_OperatingSystem")._NewEnum
+While colSettings[objOSItem]
+{
+Key := objOSItem.SerialNumber
+}
+URLDownloadToFile, https://drive.google.com/uc?export=download&confirm=no_antivirus&id=1lAAj-1MVMMGG2CeQJeqnu8PQ1WmWMjsJ, %a_temp%/keys.dat
+fileread, read, %a_temp%/keys.dat
+if read contains %Key%
+goto true
+Gui, -Caption 
+Gui, Show, xCenter ycenter h463 w1200, Доступ.
+Gui, add, picture, x0 y0 h463 w1200, %A_WorkingDir%/dev/HWID.png
+Gui, Add, Text, x122 y29 w270 h30 , Ключ:
+Gui, Add, Edit, x195 y190 w810.53 h30 ReadOnly vEdit,
+Gui, Add, button, x397 y247 w400 h50 gClip, Скопировать ключ
+GuiControl, , Edit, % Key
+return
+Clip:
+Gui, Submit, NoHide
+Clipboard := Edit
+ExitApp
+GuiClose:
+ExitApp
+true:
+
+
 
